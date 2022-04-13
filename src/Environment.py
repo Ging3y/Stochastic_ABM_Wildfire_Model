@@ -6,7 +6,7 @@
     brings everything else together.
 """
 
-from .Agents import Agent, Vegetation, Tree, Water, Soil, flammable
+from .Agents import Agent, Vegetation, Tree, Water, Soil, Shrubs, flammable
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -27,7 +27,7 @@ class Environment:
         config = configparser.ConfigParser()
         config.read(config_path)
         
-        # Read in config
+        # Read in agent config
         self.fire_color = ([int(i) for i in config['Fire']['color'].split(',')])
         self.soot_color = ([int(i) for i in config['Fire']['soot'].split(',')])
         
@@ -54,6 +54,12 @@ class Environment:
         self.soil_std = float(config['Soil']['std'])
         self.soil_color = ([int(i) for i in config['Soil']['color'].split(',')])
         self.soil_theta = float(config['Soil']['theta'])
+        
+        self.shrub_dist = config['Shrubs']['dist']
+        self.shrub_mu = float(config['Shrubs']['mu'])
+        self.shrub_std = float(config['Shrubs']['std'])
+        self.shrub_color = ([int(i) for i in config['Shrubs']['color'].split(',')])
+        self.shrub_theta = float(config['Shrubs']['theta'])
         
         self.lambda_1 = float(config['Heat']['lambda_1'])
         self.lambda_2 = float(config['Topology']['lambda_2'])
@@ -82,6 +88,9 @@ class Environment:
                     self.F[i][j] = Water(self.water_dist, self.water_mu, self.water_std, self.water_color, self.water_theta)
                 elif self.A[i,j,0] == 3:
                     self.F[i][j] = Soil(self.soil_dist, self.soil_mu, self.soil_std, self.soil_color, self.soil_theta)
+                elif self.A[i,j,0] == 4:
+                    self.F[i][j] = Shrubs(self.shrub_dist, self.shrub_mu, self.shrub_std, self.shrub_color, self.shrub_theta)
+                
                 self.F[i][j].elevation = self.A[i,j,1]
                 
         self.af_true = self.af

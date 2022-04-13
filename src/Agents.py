@@ -8,7 +8,7 @@ config.read('config.ini')
 
 def flammable():
     """ Return id's of all flammable agents """
-    return [0,1]
+    return [0,1,4]
 
 class Agent:
     """ Parent class for all agents. """
@@ -110,6 +110,27 @@ class Soil(Agent):
         
         self.id = 3
         self.flammable = 0
+
+        if self.dist == "norm":
+            self.fuel = max(np.random.normal(loc=float(self.mu), scale=float(self.std)),0)
+        else:
+            # TODO: Add support for other fuel distributions
+            self.fuel = max(np.random.normal(loc=float(self.mu), scale=float(self.std)),0)
+            
+# --- CLASS FOR SOIL -----------------------------------------------
+class Shrubs(Agent):
+    
+    def __init__(self, dist, mu, std, color, theta):
+        super().__init__()
+        self.dist = dist
+        self.mu = mu
+        self.std = std
+        self.color = color
+        self.ocolor = color
+        self.theta = theta
+        
+        self.id = 4
+        self.flammable = 1
 
         if self.dist == "norm":
             self.fuel = max(np.random.normal(loc=float(self.mu), scale=float(self.std)),0)
