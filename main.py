@@ -11,13 +11,13 @@ import numpy as np
 if __name__ == "__main__":
 
     # Load a test environment
-    E = Environment('local/environments/grass_env.npy', 'config/config.ini')
-    E.display_state()
+    # E = Environment('local/environments/grass_env.npy', 'config/config.ini')
+    # E.display_state()
     
-    for i, j in zip([53,22,84,12,60],[17,99,32,74,91]):
-        E.start_fire(i,j)
+    # for i, j in zip([53,22,84,12,60],[17,99,32,74,91]):
+    #     E.start_fire(i,j)
             
-    E.create_animation(fname="testingtesting.gif", N=100)
+    # E.create_animation(fname="testingtesting.gif", N=100)
 
     # Set wind
     #E.set_wind(2,20)

@@ -22,4 +22,4 @@ local/gifs/*
 # Only store base config file
 config/*
 !config/config.ini
-
+!config/config_silly.ini

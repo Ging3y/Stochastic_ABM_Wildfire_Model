@@ -1,4 +1,11 @@
 # -*- coding: utf-8 -*-
+""" Core class to handle environment creation and agent interaction.
+
+    This file contains all necessary methods to load environments, simulate fires,
+    create graphics, gifs, and generate burn masks and curves. It is the file that
+    brings everything else together.
+"""
+
 from .Agents import Agent, Vegetation, Tree, Water, Soil, flammable
 
 import numpy as np
@@ -10,6 +17,7 @@ import imageio
 
 class Environment:
     
+    # Import the two methods that calculate fire spread probability seperately
     from ._stv1 import sto_step, greedy_step
 
     
@@ -53,11 +61,11 @@ class Environment:
         self.lambda_4 = float(config['Wind']['lambda_4'])
         
         # Setup internal environment vars
-        self.A = np.load(file)
+        self.A = np.load(file) # 'A' is the 2d matrix of every agent and its properties
         self.n, self.m = self.A.shape[0], self.A.shape[1]
-        self.af = 0
-        self.bf = 0
-        self.wind_x = 0
+        self.af = 0 # available fuel
+        self.bf = 0 # burned fuel
+        self.wind_x = 0 
         self.wind_y = 0
         
         # Starts environment over with new fuel distribution and no burn region.
@@ -79,7 +87,7 @@ class Environment:
         self.af_true = self.af
     
     def reset_env(self):
-        """ Resets the environment, with the same fuel distribution. """
+        """ Resets the environment, according to the same fuel distribution. """
         self.af = self.af_true
         self.bf = 0
         self.wind_x = 0
@@ -131,7 +139,7 @@ class Environment:
         plt.show()
         
     def display_state(self, save_fig=False, fname=None):
-        """ Display the current environment """
+        """ Display the state of the current environment. """
         
         D = np.array([cell.color if cell.state == 0 else
                      self.fire_color for cell in self.F.flatten()])
@@ -150,7 +158,7 @@ class Environment:
         plt.close()
                 
     def start_fire(self, i, j):
-        """ Start a fire in the enviorment at cell (i,j) """
+        """ Start a fire in the enviorment at cell (i,j). """
         self.F[i][j].state = 1
         
     def set_wind(self, i,j):
@@ -159,9 +167,7 @@ class Environment:
         self.wind_y = j
         
     def simple_sim(self):
-        """ Do a simple simulation step. If a neighbor is on fire and the cell can catch on fire, catch fire.
-            THIS COULD BE PARALLELIZED.
-        """
+        """ Do a simple simulation step. If a neighbor is on fire and the cell can catch on fire, catch fire. """
         
         for i in range(self.n):
             for j in range(self.m):
@@ -174,7 +180,7 @@ class Environment:
                     self.F[i][j].state_ = 0
         
     def simple_step(self, N=100, disp=True, verbose=False):
-        """ Runs the current environment N steps forward, with the simple logic. """
+        """ Runs the current environment N steps forward, with the simple sim logic. """
         if verbose:
             af, bf = [self.af], [self.bf]
         for _ in range(N):
@@ -218,7 +224,7 @@ class Environment:
                 pass # Means walk ended early due to burning itself in
             
     def create_animation(self, fname="output.gif", N=100, tmp_dir="local/tmp", complex_=True):
-        """ Create and save a basic animation moving forward N steps. """
+        """ Create and save a basic gif animation moving forward N steps. """
         
         # Create temp directory to store images in
         if not os.path.exists(tmp_dir):
@@ -245,7 +251,7 @@ class Environment:
                 writer.append_data(img)
                 
     def get_mask(self):
-        """ Return a binary mask of what is burned, and what isn't """
+        """ Return a binary mask of what is burned, and what is not. """
         M = np.zeros((self.n, self.m))
         
         for i in range(self.n):
@@ -255,7 +261,7 @@ class Environment:
         return M
                 
     def _update(self):
-        """ Updates our enviorment, moving everything forward a  state. """
+        """ Updates our enviorment, moving everything forward a  state. Internal method. """
         for i in range(self.n):
             for j in range(self.m):
                 self.F[i][j].state = self.F[i][j].state_
@@ -270,6 +276,8 @@ class Environment:
         """ Returns the 4 or 8 point neighborhood of cell i,j. 
                 For order 4, order is URDL. 
                 For order 8, order is R, UR, U, UL, L, DL, D, RD
+                
+            Internal method.
         """
         
         x_p, y_p = [], []

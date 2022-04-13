@@ -12,11 +12,12 @@ import scipy.linalg as la
 
 def sto_step(self):
     
+    # Get wind vector
     w = np.array([self.wind_x, self.wind_y])
     for i in range(self.n):
             for j in range(self.m):
                 
-                
+                # Get neighborhood of cell
                 N = self._N(i,j,8)   
                 
                 # If cell can't catch fire, assign next state 0
@@ -27,22 +28,22 @@ def sto_step(self):
                 elif (np.sum([cell.state if cell is not None else 0 for cell in N]) == 0):
                     self.F[i][j].state_ = 0
                     
+                # Otherwise a neighboring cell is on fire
                 else:
                     
-                    # Get base probability (weight diagonals slightly less)
+                    # Get base probability
                     prob = np.array([cell.theta if (cell is not None) and (cell.state == 1) else -np.inf for cell in N])
 
                     # Fuel Delta Modifier - uses sqrt(x)*beta
                     fuel_dif = np.array([np.sign(cell.fuel-self.F[i][j].fuel)*(np.abs(cell.fuel-self.F[i][j].fuel)**.5)*self.lambda_1 
                                 if (cell is not None) and (cell.state == 1) else 0 for cell in N])
                     
-                    
                     # Topology Modifier - use lambda_2*sin(lambda_3*arctan(A1-A0))
                     top_dif = np.array([self.lambda_2*np.sin(self.lambda_3*np.arctan(self.F[i][j].elevation-cell.elevation))
                                 if (cell is not None) and (cell.state == 1) else 0 for cell in N])
                     
+                    # Wind Modifier                        
                     if la.norm(w) > 0:
-                        # Wind Modifier                        
                         orientation = [np.array([-1,0]), np.array([-1,-1]), np.array([0,-1]), np.array([1,-1]),
                                        np.array([1,0]), np.array([1,1]), np.array([0,1]), np.array([-1,1]),]
                         w_effect = np.array([self.lambda_4*np.cos(np.arccos(np.dot(w,x)/(la.norm(w)*la.norm(x)))) for x in orientation])

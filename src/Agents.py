@@ -11,8 +11,10 @@ def flammable():
     return [0,1]
 
 class Agent:
+    """ Parent class for all agents. """
     
     def __init__(self):
+        """ Set current state, next state_, and elevation """
         self.state = 0
         self.state_ = 0
         self.theta = -np.inf # Assume default that cell has propensity to burn of 0
@@ -20,9 +22,11 @@ class Agent:
         np.random.seed()
         
     def getState(self):
+        """ Return the current state of agent. """
         return self.state
     
     def resetFuel(self):
+        """ Set the available fuel according to the given distribution. """
         if self.dist == "norm":
             self.fuel = max(np.random.normal(loc=float(self.mu), scale=float(self.std)),0)
         else:
@@ -41,8 +45,8 @@ class Vegetation(Agent):
         self.ocolor = color
         self.theta = theta
         
-        self.id = 0
-        self.flammable = 1
+        self.id = 0 # Agent Id
+        self.flammable = 1 # Binary for if vegetation flammable? (yes)
 
         if self.dist == "norm":
             self.fuel = max(np.random.normal(loc=float(self.mu), scale=float(self.std)),0)
