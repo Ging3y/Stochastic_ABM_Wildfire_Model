@@ -16,6 +16,8 @@ local/gifs/*
 !local/environments/grass_env.npy
 !local/environments/tree_env.npy
 !local/environments/golf_env.npy
+!local/tmp/.gitkeep
+!local/gifs/.gitkeep
 
 # Only store base config file
 config/*
