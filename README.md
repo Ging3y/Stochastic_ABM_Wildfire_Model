@@ -5,14 +5,15 @@ This is a stochastic agent based modeling system meant to simulate wildfires. A 
 The file structure assumes you run everything as root in the top directory. Files follow the following structure:
 
 ```
-src
-config
-local
-  environments
-  gifs
-  tmp
+src --> Contains all source code
+config --> Contains all config files
+local --> All local data gets dumped here
+  environments --> Storage for numpy environments
+  gifs --> All generated gifs go here
+  tmp --> Dummy directory for images in gifs to go
 ```
 
+Git will ignore all configuration files in `config/` except for `config/config.ini` and `config/config_silly.ini`. 
 
 config.ini -- Contains all hyperparameters for the simulation. 
 
