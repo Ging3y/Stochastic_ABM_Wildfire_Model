@@ -1,0 +1,15 @@
+# Don't track any data in root
+*.gif
+*.npy
+*.png
+
+# Only store base config file
+!config/config.ini
+
+# As macro rule, don't store local
+local/
+
+# Only store three basic test environments
+!local/environments/grass_env.npy
+!local/environments/tree_env.npy
+!local/environments/golf_env.npy
