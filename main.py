@@ -10,14 +10,14 @@ import numpy as np
 
 if __name__ == "__main__":
 
-    
-    E = Environment('local_resources/E/otso.npy', 'config/config.ini')
+    # Load a test environment
+    E = Environment('local/environments/grass_env.npy', 'config/config.ini')
     E.display_state()
     
     for i, j in zip([53,22,84,12,60],[17,99,32,74,91]):
         E.start_fire(i,j)
             
-    E.create_animation(fname="local_resources/Gifs/otso.gif", N=200, tmp_dir="local_resources/tmp")
+    E.create_animation(fname="testingtesting.gif", N=100)
 
     # Set wind
     #E.set_wind(2,20)

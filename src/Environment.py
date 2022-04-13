@@ -146,7 +146,7 @@ class Environment:
         else:
             if fname is None:
                 fname = "E.png"
-            plt.savefig("local_resources/{}".format(fname))
+            plt.savefig("{}".format(fname))
         plt.close()
                 
     def start_fire(self, i, j):
@@ -217,7 +217,7 @@ class Environment:
             except:
                 pass # Means walk ended early due to burning itself in
             
-    def create_animation(self, fname="output.gif", N=100, tmp_dir="local_resources/tmp", complex_=True):
+    def create_animation(self, fname="output.gif", N=100, tmp_dir="local/tmp", complex_=True):
         """ Create and save a basic animation moving forward N steps. """
         
         # Create temp directory to store images in
@@ -228,7 +228,7 @@ class Environment:
         files_ = []
         for k in range(N):
             # Save current state
-            self.display_state(save_fig=True, fname="../{}/E_{}.png".format(tmp_dir,k))
+            self.display_state(save_fig=True, fname="{}/E_{}.png".format(tmp_dir,k))
             files_.append("{}/E_{}.png".format(tmp_dir,k))
             # Run one step forward
             if complex_:
@@ -239,7 +239,7 @@ class Environment:
             self._update()
             
         # Now create our animation
-        with imageio.get_writer(fname, mode='I') as writer:
+        with imageio.get_writer(f"local/gifs/{fname}", mode='I') as writer:
             for f in files_:
                 img = imageio.imread(f)
                 writer.append_data(img)
