@@ -1,6 +1,18 @@
 # BYUMathFire_DM
 
-This is a stochastic agent based modeling system meant to simulate wildfires. The following files are included:
+This is a stochastic agent based modeling system meant to simulate wildfires. A detailed walkthrough and example is provided in the `Examples.ipynb` file. To be able to run these simulations and install necessary python packages, simply run `pip install -r requirements.txt`. Only numpy, matplotlib, and imageio are required libraries. 
+
+The file structure assumes you run everything as root in the top directory. Files follow the following structure:
+
+```
+src
+config
+local
+  environments
+  gifs
+  tmp
+```
+
 
 config.ini -- Contains all hyperparameters for the simulation. 
 
