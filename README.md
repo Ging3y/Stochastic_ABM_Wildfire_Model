@@ -1,4 +1,4 @@
-# BYUMathFire_DM
+# Stochastic Agent-Based Wildfire Model
 
 This is a stochastic agent based modeling system meant to simulate wildfires. A detailed walkthrough and example is provided in the `Examples.ipynb` file. To be able to run these simulations and install necessary python packages, simply run `pip install -r requirements.txt`. Only numpy, matplotlib, and imageio are required libraries. 
 
@@ -13,17 +13,18 @@ local --> All local data gets dumped here
   tmp --> Dummy directory for images in gifs to go
 ```
 
-Git will ignore all configuration files in `config/` except for `config/config.ini` and `config/config_silly.ini`. 
+Git will ignore all configuration files in `config/` except for `config/config.ini` and `config/config_silly.ini`. Git will also ignore all files stored under local, with the exception of `local/environments/grass_env.npy`, `local/environments/tree_env.npy`, `local/environments/golf_env.npy` which are the test environments referenced in my project writeup. A short description of files for the reader:
 
-config.ini -- Contains all hyperparameters for the simulation. 
+`config.ini` -- Contains all hyperparameters for the simulation, set by my tinkering on what seems to produce realistic effects.
 
-_stv1.py -- External function to isolate the transition logic of if a cell catches on fire. 
+`config_silly.ini` -- Silly modification of the base configuration, used in the example notebook.
 
-Agents.py -- Function containing the super class of an agent, as well as subclasses for each agent in the simulation. 
-	Currently four are supported: Soil, Water, Grass, and Trees. 
+`_stv1.py` -- External function to isolate the transition logic of if a cell catches on fire. 
+
+`Agents.py` -- Function containing the super class of an agent, as well as subclasses for each agent in the simulation. Currently five are supported: Soil, Water, Grass, Shrubs, and Trees.
 	
-Build_Environment.py -- Simple tool to create random environments to test on.  
+`Environment.py` -- The class that holds together all agents and dictates their interactions.  
 
-Environment.py -- The class that holds together all agents and dictates their interactions.  
+`Examples.ipynb` -- Jupyter notebook to walk through all the capabilities of our model.
 
-main.py -- A script to run and show the capability of the current program.  
+`Masters_Project.pdf` -- Writeup of the system and various aspects of its behavior. In depth details of derivation of the model used. 
