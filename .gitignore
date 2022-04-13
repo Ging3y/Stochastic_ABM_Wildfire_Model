@@ -3,11 +3,11 @@
 *.npy
 *.png
 
+# As a amcro rule, don't store local
+local/
+
 # Only store base config file
 !config/config.ini
-
-# As macro rule, don't store local
-local/
 
 # Only store three basic test environments
 !local/environments/grass_env.npy
