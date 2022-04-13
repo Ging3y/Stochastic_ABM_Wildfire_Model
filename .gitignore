@@ -6,7 +6,11 @@
 # As a amcro rule, don't store local
 local/*
 !local/environments
+!local/tmp
+!local/gifs
 local/environments/*
+local/tmp/*
+local/gifs/*
 
 # Only store three basic test environments
 !local/environments/grass_env.npy
